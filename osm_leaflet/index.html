@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="../../javascripts/leaflet/leaflet.css" rel="stylesheet">
+    
+    <script src="../../javascripts/d3.min.js"></script>
+    <script src="../../javascripts/leaflet/leaflet.js"></script>
+
+    <style>
+
+        #map {
+            width: 960px;
+            height: 500px;
+        }
+
+        .leaflet-zoom-hide path {
+            fill: silver;
+            stroke: steelblue;
+        }
+
+        .province {
+            fill: none;
+            stroke: #a9a9a9;
+            stroke-width: 1;
+        }
+
+        .province:hover {
+            fill-opacity: 0.5;
+        }
+
+        #tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 1px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #tooltip h4 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        #tooltip {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid grey;
+            border-radius: 5px;
+            font-size: 12px;
+            width: auto;
+            padding: 4px;
+            color: white;
+            opacity: 0;
+        }
+
+        #tooltip table {
+            table-layout: fixed;
+        }
+
+        #tooltip tr td {
+            padding: 0;
+            margin: 0;
+        }
+
+        #tooltip tr td:nth-child(1) {
+            width: 50px;
+        }
+
+        #tooltip tr td:nth-child(2) {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="tooltip"></div>
+<p id="map"></p>
+
+<script>
+    // 定义地图，添加层
+    // var map = L.map('map').setView([40, 115], 4);
+    //
+    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+
+    var map = new L.Map("map", {center: [40, 115], zoom: 4})
+            .addLayer(new L.TileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png"));
+
+    var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+            g = svg.append("g").attr("class", "leaflet-zoom-hide");
+    d3.json("data/china.json", function (collection) {
+        console.log(collection);
+        var transform = d3.geo.transform({point: projectPoint}),
+                path = d3.geo.path().projection(transform);
+        var feature = g.selectAll(".province")
+                .data(collection.features)
+                .enter().append("path").attr("class", "province");
+
+
+        map.on("viewreset", reset);
+        reset();
+        // Reposition the SVG to cover the features.
+        function reset() {
+            var bounds = path.bounds(collection),
+                    topLeft = bounds[0],
+                    bottomRight = bounds[1];
+            svg.attr("width", bottomRight[0] - topLeft[0])
+                    .attr("height", bottomRight[1] - topLeft[1])
+                    .style("left", topLeft[0] + "px")
+                    .style("top", topLeft[1] + "px");
+            g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+            feature.attr("d", path).on("mouseover", mouseOver).on("mouseout", mouseOut);
+            ;
+        }
+
+        // Use Leaflet to implement a D3 geometric transformation.
+        function projectPoint(x, y) {
+            var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+            this.stream.point(point.x, point.y);
+        }
+    });
+
+    function mouseOver(d) {
+        d3.select("#tooltip").transition().duration(200).style("opacity", .9);
+
+        d3.select("#tooltip").html(tooltipHtml(d.properties["name"]))
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+    }
+
+    function mouseOut() {
+        //d3.select("#tooltip").transition().duration(500).style("opacity", 0);
+    }
+
+    function tooltipHtml(n, d) {    /* function to create html content string in tooltip div. */
+        return "<h4>" + n + "</h4>";
+    }
+</script>
+
+
+</body>
+</html>
