@@ -1,3 +1,4 @@
-﻿/_site/
-*.suo
+_site
+.sass-cache
 Thumbs.db
+*.suo

@@ -1,2 +1,15 @@
-﻿markdown: rdiscount
-pygments: true
+﻿# Site settings
+title: D3cn
+email: hueidou163@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  D3cn专注于数据可视化库D3.js，以学习，交流和普及D3.js为目的。
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://d3cn.tk" # the base hostname & protocol for your site
+#twitter_username: jekyllrb
+qqqun_username:  D3.js数据可视化
+qqqun_k:  V2BXGg
+github_username:  d3cn
+disqus:  d3cn
+
+# Build settings
+markdown: kramdown
