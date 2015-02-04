@@ -1,10 +1,15 @@
-d3cn
+D3cn
 ====
 
-D3.js数据可视化群，[点击链接加入群【D3.js数据可视化】](http://jq.qq.com/?_wv=1027&k=MJRPBt)
+D3cn专注于数据可视化库D3.js，以学习，交流和普及D3.js为目的。
 
-主要：D3.js API学习，Examples使用。
+* QQ群：[D3.js数据可视化][qqqun]
+* 组织：[d3cn]
+* 站点邮箱：[hueidou163@gmail.com][site-mail]
 
-其他：数据可视化/HTML5/Javascript/CSS3/SVG研究。
-
-此站点用于d3文章分享，d3例子的收集和学习。
+[qqqun]:			http://jq.qq.com/?_wv=1027&k=V2BXGg
+[site-mail]:		mailto:hueidou163@gmail.com
+[d3cn]:				https://github.com/d3cn
+[d3cn.github.io]:	https://github.com/d3cn/d3cn.github.io
+[GitHub Pages]:		https://pages.github.com/
+[jekyll-docs]:		http://jekyllrb.com/docs/home/
