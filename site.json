@@ -1,0 +1,20 @@
+---
+layout: null
+---
+{
+    "title": {{ site.title | jsonify }},
+    "description": {{ site.description | jsonify }},
+    "link": "{{ site.url }}{{ site.baseurl }}/",
+    "time": "{{ site.time  }}",
+    "items": [{% for post in site.posts %}
+        {
+            "title": {{ post.title | jsonify }},
+            "content": {{ post.content | jsonify }},
+            "date": "{{ post.date  }}",
+            "link": "{{ post.url | prepend: site.baseurl | prepend: site.url }}",
+            "guid": "{{ post.url | prepend: site.baseurl | prepend: site.url }}",
+            "tags": {{ post.tags | jsonify }},
+            "categories": {{ post.categories | jsonify }}
+        }{% endfor %}
+    ]
+}
