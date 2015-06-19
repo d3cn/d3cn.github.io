@@ -14,5 +14,7 @@ disqus:  d3cn
 # Build settings
 markdown: rdiscount
 
+highlighter: pygments
+
 permalink: /:year/:month/:day/:title.html
 exclude: ["CNAME","d3cn.github.io.sln","README.md"]

@@ -91,11 +91,11 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
     });
 和async.series的使用方法还是一致的，而且避免了时间叠加的缺点，数组内的方法会同时执行。
 
-下面是使用async.parallel方法的例子（右击查看源代码）：
+下面是使用async.parallel方法的例子（右击查看框架源代码）。
 
- <iframe src="/demo/async/index.html" style="width:740px; height:370px;"></iframe>
+ <iframe src="/demo/async/index.html" style="width:740px; height:370px; border: none;"></iframe>
 
-下面分别是async.series和async.parallel请求数据顺序的时间线：
+下面分别是async.series和async.parallel请求数据顺序的时间线，可看到后者明显优于前者。
 
 ![async.series](/demo/async/async1.jpg)
 ![async.parallel](/demo/async/async2.jpg)
