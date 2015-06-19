@@ -116,3 +116,8 @@ async.parallel([
 * async.parallel
 
 ![async.parallel](/demo/async/async2.jpg)
+
+##参考
+
+* [async模块的异步处理 - CNode](https://cnodejs.org/topic/53d3938d895ba3062b7f4509)
+* [Stacked Bar Chart](http://bl.ocks.org/mbostock/3886208)
