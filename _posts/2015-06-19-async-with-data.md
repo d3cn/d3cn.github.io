@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "使用Async获取数据"
+title: "使用Async解决d3异步获取数据的问题"
 date: 2015-06-19 13:15:38
 categories: d3
 tags: d3 async
