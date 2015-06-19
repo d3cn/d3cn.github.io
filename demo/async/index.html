@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/js/d3.min.js"></script>
+    <script src="/js/async.js"></script>
+    <style>
+        body {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .bar {
+            fill: steelblue;
+        }
+
+        .x.axis path {
+        }
+    </style>
+</head>
+<body>
+    <script>
+        /*
+        * 首先，构造视图
+        */
+        var margin = { top: 60, right: 20, bottom: 30, left: 40 },
+            width = 740 - margin.left - margin.right,
+            height = 370 - margin.top - margin.bottom;
+
+        // x缩放
+        var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1);
+
+        // y缩放
+        var y = d3.scale.linear()
+            .rangeRound([height, 0]);
+
+        // 颜色
+        var color = d3.scale.ordinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888"]);
+
+        // x轴
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        // y轴
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+        //.tickFormat(d3.format(".2s")); //
+
+        // svg，位置；g，位置
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        /*
+        * async.parallel([
+        *   function(){ ... },
+        *   function(){ ... }
+        * ], callback);
+        *
+        * 可替换为使用async.series
+        */
+        async.parallel([
+            // student
+            function (callback) {
+                d3.json('student.json', function (students) {
+                    callback(null, students);
+                });
+            },
+            // score
+            function (callback) {
+                d3.json('score.json', function (scores) {
+                    callback(null, scores);
+                });
+            }
+        ], function (err, result) {
+            students = result[0];
+
+            x.domain(students.map(function (d) { return d.name; }));
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            // y
+            scores = result[1];
+
+            // 根据科目，确定颜色域
+
+            color.domain(d3.keys(scores[0].score));
+            scores.forEach(function (d) {
+                var y0 = 0;
+                d.scores = color.domain().map(function (name) { return { name: name, y0: y0, y1: y0 += +d.score[name] }; });
+            });
+
+            y.domain([0, d3.max(scores, function (d) { return d3.keys(d.score).length * 100; })]);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+
+            var state = svg.selectAll(".student")
+                .data(students)
+              .enter().append("g")
+                .attr("class", "g")
+                .attr("transform", function (d) { return "translate(" + x(d.name) + ",0)"; });
+
+            state.selectAll("rect")
+                .data(function (d) { console.log(scores.filter(function (score) { return score.id == d.id; })[0]); return scores.filter(function (score) { return score.id == d.id; })[0].scores; })
+              .enter().append("rect")
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) { return y(d.y1); })
+                .attr("height", function (d) { return y(d.y0) - y(d.y1); })
+                .style("fill", function (d) { return color(d.name); });
+
+            var legend = svg.selectAll(".legend")
+                .data(color.domain().slice())
+              .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function (d, i) { return "translate(" + i * 60 + ",-20)"; });
+
+            legend.append("rect")
+                .attr("x", 10)
+                .attr("y", -8)
+                .attr("width", 20)
+                .attr("height", 15)
+                .style("fill", color);
+
+            legend.append("text")
+                .attr("x", 60)
+                .attr("y", 3)
+                .style("text-anchor", "end")
+                .text(function (d) { return d; });
+        });
+
+    </script>
+</body>
+</html>
