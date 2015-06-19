@@ -12,7 +12,8 @@ github_username:  d3cn
 disqus:  d3cn
 
 # Build settings
-markdown: kramdown
+markdown: rdiscount
+
 highlighter: pygments
 
 permalink: /:year/:month/:day/:title.html

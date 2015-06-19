@@ -22,6 +22,7 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
 	    });
 	    ...
     });
+
 这种方法简单易懂，但是缺点呢
 1. 如果n个数据请求，就需要n-1个嵌套，明显不合理
 2. 数据请求是同步执行的，所需时间为t1+t2+...+tn，效率低
@@ -71,9 +72,10 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
 	    // here
 	    // results
     });
-        
+
 这个方法会依次执行数组里指定的方法，所以也会有时间叠加的缺点。
 ##async.parallel
+
 	async.parallel([
         function (callback) {
             d3.json('data1.json', function (result1) {
@@ -89,6 +91,7 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
 	    // here
 	    // results
     });
+
 和async.series的使用方法还是一致的，而且避免了时间叠加的缺点，数组内的方法会同时执行。
 
 下面是使用async.parallel方法的例子（右击查看框架源代码）。
