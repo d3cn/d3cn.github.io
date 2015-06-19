@@ -99,7 +99,12 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
 
  <iframe src="/demo/async/index.html" style="width:740px; height:370px; border: none;"></iframe>
 
-下面分别是async.series和async.parallel请求数据顺序的时间线，可看到后者明显优于前者。
+下面分别是两种请求数据顺序的时间线，可看到后者明显优于前者。
+
+* async.series
 
 ![async.series](/demo/async/async1.jpg)
+
+* async.parallel
+
 ![async.parallel](/demo/async/async2.jpg)
