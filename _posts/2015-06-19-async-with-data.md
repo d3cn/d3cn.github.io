@@ -97,7 +97,7 @@ D3.js加载外部资源的方法（例[d3.json](https://github.com/mbostock/d3/w
 
 下面是使用async.parallel方法的例子（右击查看框架源代码）。
 
- <iframe src="/demo/async/index.html" style="width:740px; height:370px; border: none;"></iframe>
+ <iframe src="/demo/async/index.html" style="width:100%; height:370px; border: none;overflow-y: hidden"></iframe>
 
 下面分别是两种请求数据顺序的时间线，可看到后者明显优于前者。
 

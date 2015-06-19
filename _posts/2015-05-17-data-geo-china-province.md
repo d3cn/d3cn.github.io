@@ -14,7 +14,7 @@ author-link: http://san.sanrabbit.com
 
 中国-省份地图数据
 
-<iframe src="{{ page.view }}" style="width:740px; height:370px;"></iframe>
+<iframe src="{{ page.view }}" style="width:100%; height:370px; border: none;"></iframe>
 
 <ul>
     <li><a href="{{ page.raw }}" title="来自GitHub RAW">下载</a></li>
