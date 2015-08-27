@@ -96,7 +96,7 @@
     d3.json("/data/geo/china.json", function (collection) {
         console.log(collection);
         var transform = d3.geo.transform({point: projectPoint}),
-                path = d3.geo.path().projection(null);
+                path = d3.geo.path().projection(transform);
         var feature = g.selectAll(".province")
                 .data(collection.features)
                 .enter().append("path").attr("class", "province");
