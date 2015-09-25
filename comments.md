@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 关于
+title: 评论
 permalink: /comments/
 ---
 
