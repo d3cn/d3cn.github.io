@@ -9,7 +9,6 @@ url: "http://d3cn.tk" # the base hostname & protocol for your site
 qqqun_username:  D3.js数据可视化
 qqqun_k:  V2BXGg
 github_username:  d3cn
-disqus:  d3cn
 
 # Build settings
 markdown: rdiscount
