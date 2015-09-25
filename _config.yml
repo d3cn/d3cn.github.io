@@ -18,3 +18,7 @@ highlighter: pygments
 
 permalink: /:year/:month/:day/:title.html
 exclude: ["CNAME","d3cn.github.io.sln","README.md"]
+
+# 评论插件
+gems:
+  - jekyll-feed
