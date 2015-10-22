@@ -167,12 +167,14 @@
             } else {
 
                 // 实现互斥展开
-                d.parent.children.forEach(function (dd) {
-                    if (dd.children) {
-                        dd._children = dd.children;
-                        dd.children = null;
-                    }
-                });
+                if (d.parent) {
+                    d.parent.children.forEach(function (dd) {
+                        if (dd.children) {
+                            dd._children = dd.children;
+                            dd.children = null;
+                        }
+                    });
+                }
                 //-----------
 
                 d.children = d._children;
