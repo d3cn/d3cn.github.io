@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="/js/d3.min.js"></script>
+    <style>
+        html, body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .rect {
+            fill: white;
+            fill-opacity: 0.1;
+            stroke-width: 1px;
+            stroke: silver;
+            shape-rendering: crispEdges;
+            stroke-opacity: 0.1;
+        }
+        #container {
+            position:fixed;
+            top:0;
+            left:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+
+        var width = window.screen.width;
+        var height = window.screen.height;
+
+        var x_count = width / 10;
+        var y_count = height / 10;
+
+        var color = d3.scale.category10();
+        var timeInterval = 1200;
+
+        // 数据
+        var bar = [];
+        var matrix = new Array(x_count);
+
+        for (var i = 0; i < x_count; i++) {
+            matrix[i] = [];
+            for (var j = 0; j < y_count; j++) {
+                var node = { '0': false, '1': false, 'x_index': i, 'y_index': j, count: 0 };
+                matrix[i].push(node);
+                bar.push(node);
+            }
+        }
+
+        // 图形
+        var svg = d3.select('#container').append('svg').attr('width', width).attr('height', height);
+        svg.selectAll('.rect').data(bar).enter()
+            .append('rect')
+            .attr('class', 'rect')
+            .attr('x', function (d) { return d.x_index * 10; })
+            .attr('y', function (d) { return d.y_index * 10 })
+            .attr('width', 10)
+            .attr('height', 10);
+
+
+
+
+        // 初始状态
+        for (var i = 0; i < x_count; i++) {
+            matrix[i][0][0] = true;
+        }
+
+        var current = 0;
+
+        update();
+
+        function update() {
+            updateMatrix();
+            updateLife();
+
+            current = (current + 1) % 2;
+
+            setTimeout(update, timeInterval);
+        }
+
+        function updateMatrix() {
+            for (var i = 0; i < x_count; i++) {
+                for (var j = 0; j < y_count; j++) {
+
+                    var life = matrix[i][j];
+                    life.count = 0;
+                    for (var ii = (i == 0 ? 0 : i - 1) ; ii <= (i == x_count - 1 ? i : i + 1) ; ii++) {
+                        for (var jj = (j == 0 ? 0 : j - 1) ; jj <= (j == y_count - 1 ? j : j + 1) ; jj++) {
+                            if (ii != i || jj != j) {
+
+                                if (matrix[ii][jj][current]) {
+                                    life.count = life.count + 1;
+                                }
+                            }
+                        }
+                    }
+
+                    if (life[current] == true) {
+                        if (life.count == 3 || life.count == 2) {
+                            life[(current + 1) % 2] = true;
+                        }
+                        else {
+                            life[(current + 1) % 2] = false;
+                        }
+                    }
+                    else {
+                        if (life.count == 3) {
+                            life[(current + 1) % 2] = true;
+                        }
+                        else {
+                            life[(current + 1) % 2] = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        function updateLife() {
+            svg.selectAll('.rect')
+                .data(bar)
+                .style('fill', function (d) {
+                    //return d[current] ? color(d.x_index + d.y_index) : 'white';
+                    if (d[current]) {
+                        return d[(current + 1) % 2] ? '#bbb' : '#888';
+                    }
+                    else {
+                        return 'white';
+                    }
+
+                });
+
+        }
+
+
+    </script>
+</body>
+</html>
