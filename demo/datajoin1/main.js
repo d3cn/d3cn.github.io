@@ -54,7 +54,7 @@ var rects = lines.append('g')
     .attr('x', function (d, i) { return i * 15 + 42; })
     .attr('y', function () {
         var i = +d3.select(this.parentNode).attr('data-index');
-        return (i) * 40 + 24;
+        return (i) * 40 + 23;
     })
     .attr('fill', function (d) {
         return d == 1 ? '#36fdf2' : '#3a3a3f';
