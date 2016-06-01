@@ -14,7 +14,7 @@ duoshuo: d3cn
 # Build settings
 markdown: rdiscount
 
-highlighter: pygments
+highlighter: rouge
 
 permalink: /:year/:month/:day/:title.html
 exclude: ["CNAME","d3cn.github.io.sln","README.md"]
