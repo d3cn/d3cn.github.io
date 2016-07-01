@@ -12,9 +12,9 @@ github_username:  d3cn
 duoshuo: d3cn
 
 # Build settings
-markdown: rdiscount
+markdown: kramdown
 
-highlighter: pygments
+highlighter: rouge
 
 permalink: /:year/:month/:day/:title.html
 exclude: ["CNAME","d3cn.github.io.sln","README.md"]
